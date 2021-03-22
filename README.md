@@ -2,7 +2,17 @@
 
 Python3的redis分布式锁, 使用 setnx 和 lua script, 提供 block 和 no-block 函数
 
-#### 用法
+## 官方推荐使用lua脚本确保原子性
+
+```
+if redis.call('get', KEYS[1]) == ARGV[1] then
+    return redis.call('del', KEYS[1])
+else
+    return 0
+end
+```
+
+## 用法
 
 ```
 import redis
