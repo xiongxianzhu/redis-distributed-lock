@@ -82,25 +82,25 @@ redis_client = StrictRedis(connection_pool=pool)
 count = 10
 
 
-def seckill(i):
+def sec_kill(i):
     lock = RedisLock(redis_client)
     lock_key = 'test'
     try:
         if lock.acquire(lock_key, expire=5000, acquire_timeout=2):
-            print("线程:{}--获得了锁".format(i))
+            print("线程[{}]--获得了锁".format(i))
             global count
             if count < 1:
-                print("线程:{}--没抢到，票抢完了".format(i))
+                print("线程[{}]--没抢到，票抢完了".format(i))
                 return
             count -= 1
-            print("线程:{}--抢到一张票，还剩{}张票".format(i, count))
+            print("线程[{}]--抢到一张票，还剩{}张票".format(i, count))
     finally:
         lock.release(lock_key)
-    print("线程:{}--获得了锁".format(i))
+    print("线程[{}]--获得了锁".format(i))
 
 
 if __name__ == '__main__':
-    # 50个线程模拟秒杀10张票
-    for i in range(50):
-        t = Thread(target=seckill, args=(i,))
+    # 100个线程模拟秒杀10张票
+    for i in range(100):
+        t = Thread(target=sec_kill, args=(i,))
         t.start()
