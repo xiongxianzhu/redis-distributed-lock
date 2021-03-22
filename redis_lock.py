@@ -38,7 +38,11 @@ class RedisLock(object):
         lockname = f'{self.prefix}:{self.lock_name}'
         while True:
             # 如果不存在这个锁则加锁并设置过期时间，避免死锁
-            if self.redis_conn.set(lockname, self.identifier, nx=True, px=expire):
+            if self.redis_conn.set(
+                    lockname,
+                    self.identifier,
+                    nx=True,
+                    px=acquire_timeout):
                 return True
             if acquire_timeout:
                 if acquire_timeout <= 0:
