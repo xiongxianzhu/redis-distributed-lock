@@ -24,8 +24,8 @@ try:
         # TODO
         pass
 finally:
-    lock.release(key)
+    lock.release(lock_name)
 
 # 使用 No-block 模式
-lock.acquire_no_block(key)
+lock.acquire_no_block(lock_name)
 ```
