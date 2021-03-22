@@ -53,6 +53,10 @@ class RedisLock(object):
     def acquire_no_block(self, lock_name, expire=5000):
         """
         从redis连接获取一个redis分布式锁， 使用No-block模式
+
+        :param lock_name: 锁的名称
+        :param expire: redis key的过期时间 (millisecond)
+        :return:
         """
         lockname = f'{self.prefix}:{self.lock_name}'
         if self.redis_conn.set(lockname, self.identifier, nx=True, px=expire):
