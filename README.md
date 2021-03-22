@@ -10,17 +10,17 @@ import redis
 from .redis_lock import RedisLock
 
 
-redis_conn = redis.Redis(host="127.0.0.1", port=6379, decode_responses=True)
-lock = RedisLock(redis_conn)
+redis_client = redis.Redis(host="127.0.0.1", port=6379, db=0)
+lock = RedisLock(redis_client)
 
-lock = RedisLock(redis_conn, sleeptime=100)
+lock = RedisLock(redis_client, sleeptime=100)
 
-lock = RedisLock(redis_conn, prefix='lock')
+lock = RedisLock(redis_client, prefix='lock')
 
 # 使用 block 模式
 lock_name = 'lock_name'
 try:
-    if lock.acquire(lock_name, expire=3000, timeout=2):
+    if lock.acquire(lock_name, expire=3000, acquire_timeout=2):
         # TODO
         pass
 finally:
