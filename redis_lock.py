@@ -30,11 +30,11 @@ class RedisLock(object):
 
         :param lock_name: 锁的名称
         :param expire: redis key的过期时间 (millisecond)
-        :param acquire_timeout: 锁的超时时间
+        :param acquire_timeout: 锁的超时时间(second)
         :return:
         """
-        if timeout:
-            assert isinstance(timeout, int)
+        if acquire_timeout:
+            assert isinstance(acquire_timeout, int)
         lockname = f'{self.prefix}:{self.lock_name}'
         while True:
             # 如果不存在这个锁则加锁并设置过期时间，避免死锁
@@ -64,5 +64,5 @@ class RedisLock(object):
         :return:
         """
         lockname = f'{self.prefix}:{self.lock_name}'
-        unlock_script = self.redisconn.register_script(self.unlock_script)
+        unlock_script = self.redis_conn.register_script(self.unlock_script)
         return unlock_script(keys=[lockname], args=[self.identifier])
