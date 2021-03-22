@@ -18,9 +18,9 @@ lock = RedisLock(redis_conn, sleeptime=100)
 lock = RedisLock(redis_conn, prefix='lock')
 
 # 使用 block 模式
-key = 'key'
+lock_name = 'lock_name'
 try:
-    if lock.acquire(key, expire=3000, timeout=2):
+    if lock.acquire(lock_name, expire=3000, timeout=2):
         # TODO
         pass
 finally:
