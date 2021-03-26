@@ -11,7 +11,7 @@ class RedisLock(object):
     基于Redis实现分布式锁
     """
 
-    def __init__(self, redis_conn, prefix='lock', sleeptime=1):
+    def __init__(self, redis_conn, prefix='lock', sleeptime=100):
         self.redis_conn = redis_conn
         self.prefix = prefix
         self.identifier = str(uuid.uuid4())
