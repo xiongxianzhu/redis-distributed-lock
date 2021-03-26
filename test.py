@@ -96,7 +96,7 @@ def sec_kill(i):
             print("线程[{}]--抢到一张票，还剩{}张票".format(i, count))
     finally:
         lock.release(lock_key)
-    print("线程[{}]--获得了锁".format(i))
+    print("线程[{}]--释放了锁".format(i))
 
 
 if __name__ == '__main__':
